@@ -1,0 +1,34 @@
+<div th:fragment="menu">
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand">Мои поставки</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Переключатель навигации">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Текущие поставки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/suppliers">Поставщики и товары</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/add_delivery">Создать поставку</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/reports">Отчеты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/warehouse">Склад</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/settings">Настройки</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header th:insert="blocks/header :: header"/>
+</head>
+<body>
+<menu th:insert="blocks/menu :: menu"/>
+<div class="container">
+    <h1>Добавить поставщика</h1>
+    <form method="post" action="/settings/addProvider">
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <form class="d-flex">
+                    <input type="text" class="form-control me-4" placeholder="Название поставщика" name="providerName">
+                </form>
+            </div>
+            <button type="submit" class="btn btn-success">Добавить</button>
+        </div>
+    </form>
+    <h1>Добавить продукт</h1>
+    <form method="post" action="/settings/addProduct">
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <form class="d-flex">
+                    <input type="text" class="form-control me-4" placeholder="Название продукта" name="productName">
+                    <input type="text" class="form-control me-4" placeholder="Вес продукта" name="productWeight">
+                    <input type="text" class="form-control me-4" placeholder="Цена продукта" name="productPrice">
+                </form>
+            </div>
+            <button type="submit" class="btn btn-success">Добавить</button>
+        </div>
+    </form>
+    <h1>Добавить поставщику продукт</h1>
+    <form method="post" action="/settings/addProductForProvider">
+        <div class="row g-3 align-items-center">
+            <div class="col-auto">
+                <h4>Выберите поставщика</h4>
+                <select class="form-select" name="providerId" aria-label="Пример выбора по умолчанию">
+                    <div th:each="i : ${getAllProviders}">
+                        <option th:value="${i.getId}" th:text="${i.getProviderName}"/>
+                    </div>
+                </select>
+                <h4>Выберите продукт</h4>
+                <select class="form-select" name="productId" aria-label="Пример выбора по умолчанию">
+                    <div th:each="z : ${getAllProducts}">
+                        <option th:value="${z.getId}" th:text="${z.getProductName}"/>
+                    </div>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-success">Добавить</button>
+        </div>
+    </form>
+</div>
+</div>
+</body>
+</html>

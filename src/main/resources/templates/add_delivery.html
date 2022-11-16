@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header th:insert="blocks/header :: header"/>
+</head>
+<body>
+<menu th:insert="blocks/menu :: menu"/>
+<div class="container">
+    <h1>Создать поставку</h1>
+    <form method="post" action="/add_delivery/create">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Выбор поставщика</th>
+                <th>Выбор продуктов</th>
+            </tr>
+            </thead>
+            <tbody>
+            <div th:each="i : ${getAllProviders}">
+                <tr>
+                    <td th:text="${i.getProviderName}"/>
+                    <td>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col" width="30">Продукт</th>
+                                <th scope="col" width="30">Вес</th>
+                                <th scope="col" width="30">Цена</th>
+                                <th scope="col" width="30">Действие</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <div th:each="z : ${i.getProductList}">
+                                <tr>
+                                    <td th:text="${z.getProductName}"/>
+                                    <td th:text="${z.getWeight}"/>
+                                    <td th:text="${z.getPrice}"/>
+                                    <td>
+                                        <a th:href="@{|/add_delivery/addProduct?id=${z.getId()}|}"
+                                           class="btn btn-success">В поставку</a>
+                                    </td>
+                                </tr>
+                            </div>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </div>
+            </tbody>
+        </table>
+    </form>
+    <h1>Корзина продуктов</h1>
+    <div class="product-preview-container" th:each="i : ${cart.products}">
+        <ul>
+            <form method="post" th:action="'/add_delivery/' + ${i.getId()} + '/deleteProductFromCart'">
+                <li><span th:text="${i.getProductName()}"></span></li>
+                <li><span th:text="${i.getPrice()}"></span></li>
+                <li>
+                    <button class="dropdown-item" type="submit">Удалить</button>
+                </li>
+            </form>
+            <div class="col-sm-4">
+                <form method="post" th:action="'/add_delivery/updateCount/' + ${i.getId()}">
+                    <input type="text" id="inputPassword6" name="count" th:value="${i.getCount()}" class="form-control"
+                           aria-describedby="passwordHelpInline">
+                    <button type="submit" class="btn btn-success">Обновить количество</button>
+                </form>
+            </div>
+        </ul>
+    </div>
+    <form th:action="@{/add_delivery/makeOrder}" method="post">
+        <div class="col-auto">
+            <a class="btn btn-primary" href="/" role="button">К поставкам</a>
+            <button type="submit" class="btn btn-primary">Создать заказ</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

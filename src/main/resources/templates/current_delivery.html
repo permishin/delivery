@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header th:insert="blocks/header :: header"/>
+</head>
+<body>
+<menu th:insert="blocks/menu :: menu"/>
+<div class="container">
+    <h1>Текущие поставки</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>№</th>
+            <th>Дата</th>
+            <th>Статус</th>
+            <th>Состав</th>
+            <th>Действие</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="i : ${getAllCurrentDeliveries}">
+            <tr>
+                <td th:text="${i.getId}"/>
+                <td th:text="${i.getTime}"/>
+                <td th:text="${i.getStatusDescription}"/>
+                <td>
+                    <div th:each="z : ${i.getProductCount}">
+                        <div th:text="${z.getKey.getProductName}"/>
+                    </div>
+                </td>
+                <td><a class="nav-link" th:href="'/' + ${i.getId}">Подробнее</a></td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

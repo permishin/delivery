@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header th:insert="blocks/header :: header"/>
+</head>
+<body>
+<menu th:insert="blocks/menu :: menu"/>
+<div class="container">
+    <h1>Склад</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>№</th>
+            <th>Создан</th>
+            <th>Получен</th>
+            <th>Заказ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="i : ${warehouse}">
+            <tr>
+                <td th:text="${i.getId}"/>
+                <td th:text="${i.getStartTime}"/>
+                <td th:text="${i.getEndTime}"/>
+                <td>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Продукт</th>
+                            <th>Вес</th>
+                            <th>Количество</th>
+                            <th>Цена за единицу</th>
+                            <th>Поставщик(и)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <div th:each="z : ${i.getWarehouseProduct}">
+                            <tr>
+                                <td th:text="${z.getKey.getProductName}"/>
+                                <td th:text="${z.getKey.getWeight}"/>
+                                <td th:text="${z.getValue}"/>
+                                <td th:text="${z.getKey.getPrice}"/>
+                                <td th:text="${z.getKey.getProvider.getProviderName}"/>
+                            </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

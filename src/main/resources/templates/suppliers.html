@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header th:insert="blocks/header :: header"/>
+</head>
+<body>
+<menu th:insert="blocks/menu :: menu"/>
+<div class="container">
+    <h1>Все поставщики и продукты</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Поставщик</th>
+            <th>Продукты</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="i : ${getAllProviders}">
+            <tr>
+                <td th:text="${i.getProviderName}"/>
+                <td>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" width="30">Продукт</th>
+                            <th scope="col" width="30">Вес</th>
+                            <th scope="col" width="30">Цена</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <div th:each="z : ${i.getProductList}">
+                            <tr>
+                                <td th:text="${z.getProductName}"/>
+                                <td th:text="${z.getWeight}"/>
+                                <td th:text="${z.getPrice}"/>
+                            </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

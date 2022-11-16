@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header th:insert="blocks/header :: header"/>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.input-daterange').datepicker({
+                format: 'yyyy-mm-dd',
+                autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
+                disableTouchKeyboard: true
+            });
+        });
+    </script>
+</head>
+<body>
+<menu th:insert="blocks/menu :: menu"/>
+<div class="container">
+    <h1>Отчеты</h1>
+    <div class="my-sm-2 container-fluid">
+        <div class="col px-md-5">
+            <div class="p-3 border bg-light">
+                <form method="post" action="/reports/currentDate">
+                    <div class="container px-1 px-sm-5 mx-auto">
+                        <div class="row g-3 align-items-center">
+                            <div class="input-group input-daterange">
+                                <form class="form-inline">
+                                    <div class="container px-1 px-sm-5 mx-auto">
+                                        <div class="row g-3 align-items-center">
+                                            <div class="input-group input-daterange">
+                                                <input type="text" class="mx-1 form-control"
+                                                       placeholder="Начало периода" aria-label="Username"
+                                                       aria-describedby="basic-addon1" id="start" name="startDate"
+                                                       th:value="${startDate}" autocomplete="off">
+                                                <input type="text" class="mx-1 form-control" placeholder="Конец периода"
+                                                       aria-label="Username" aria-describedby="basic-addon2" id="end"
+                                                       name="endDate" th:value="${endDate}" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-success">Сформировать отчет</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="my-sm-2 container-fluid">
+        <div class="col px-md-5">
+            <div class="p-3 border bg-light">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Поставка</th>
+                        <th>Вес</th>
+                        <th>Цена</th>
+                        <th>Кол-во</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <div th:each="i : ${warehouse}">
+                        <tr>
+                            <td th:text="${i.getId}"/>
+                            <td>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" width="30">Поставщик</th>
+                                        <th scope="col" width="30">Продукт</th>
+                                        <th scope="col" width="30">Вес</th>
+                                        <th scope="col" width="30">Цена</th>
+                                        <th scope="col" width="30">Кол-во</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <div th:each="z : ${i.getWarehouseProduct}">
+                                        <tr>
+                                            <td th:text="${z.getKey.getProvider.getProviderName}"/>
+                                            <td th:text="${z.getKey.getProductName}"/>
+                                            <td th:text="${z.getKey.getWeight}"/>
+                                            <td th:text="${z.getKey.getPrice}"/>
+                                            <td th:text="${z.getValue}"/>
+                                        </tr>
+                                    </div>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td th:text="${i.getTotalWeight}"/>
+                            <td th:text="${i.getTotalPrice}"/>
+                            <td th:text="${i.getTotalCount}"/>
+                        </tr>
+                    </div>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

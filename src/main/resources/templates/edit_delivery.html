@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <header th:insert="blocks/header :: header"/>
+</head>
+<body>
+<menu th:insert="blocks/menu :: menu"/>
+<div class="container">
+    <h1 th:text="'Работа с поставкой № ' + ${currentDelivery.getId}"/>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Дата создания заказа</th>
+            <th>Статус</th>
+            <th>Продукция</th>
+            <th>Подтвердить заказ</th>
+        </tr>
+        </thead>
+        <tbody>
+        <div th:each="i : ${currentDelivery}">
+            <tr>
+                <td th:text="${i.getTime}"/>
+                <td>
+                    <form method="post" th:action="'/' + ${i.getId} + '/editStatus'">
+                        <select class="form-select" name="status">
+                            <div th:each="z : ${statuses}">
+                                <div th:if="${z == i.getStatusDescription}">
+                                    <option selected th:value="${i.getStatusDescription}" th:text="${i.getStatusDescription}"/>
+                                </div>
+                                <div th:if="${z != i.getStatusDescription}">
+                                    <option th:value="${z}" th:text="${z}"/>
+                                </div>
+                            </div>
+                        </select>
+                        <button type="submit" class="btn btn-primary"
+                                style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;">
+                            Изменить статус
+                        </button>
+                    </form>
+                </td>
+                <td>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Название</th>
+                            <th>Количество</th>
+                            <th>Цена</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <div th:each="z : ${i.getProductCount}">
+                            <tr>
+                                <td th:text="${z.getKey.getProductName}"/>
+                                <td th:text="${z.getValue}"/>
+                                <td th:text="${z.getKey.getPrice}"/>
+                            </tr>
+                        </div>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    <form method="post" th:action="'/' + ${i.getId} + '/closeDelivery'">
+                        <div th:if="${i.getStatus == T(com.example.deliveries.entity.Status).DELIVERED}">
+                            <button type="submit" class="btn btn-primary">Закрыть поставку</button>
+                        </div>
+                        <div th:if="${i.getStatus != T(com.example.deliveries.entity.Status).DELIVERED}">
+                            <button type="submit" class="btn btn-primary" disabled data-bs-toggle="button">Недоступно
+                            </button>
+                        </div>
+                    </form>
+                </td>
+            </tr>
+        </div>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
